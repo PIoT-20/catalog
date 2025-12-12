@@ -1,0 +1,28 @@
+{
+  "service": {
+    "id": "23131-123123-12312",
+    "service_type": "My Service",
+    "address": "192.168.0.1:1834",
+    "description": "This is a sample service"
+  },
+  "device": {
+    "id": "123123-123123-12312",
+    "device_type": "My Device",
+    "address": "192.168.0.1:1834",
+    "description": "This is a sample device",
+    "sensors": [
+      {
+        "id": "123123-123123-12312",
+        "name": "Temperature",
+        "model": "dhcp",
+        "unit": "Celsius"
+      }
+    ]
+  },
+  "sensor": {
+    "id": "123123-123123-12312",
+    "name": "Temperature",
+    "model": "dhcp",
+    "unit": "Celsius"
+  }
+}
