@@ -4,17 +4,10 @@ version = "0.1.0"
 description = "My Python project"
 readme = "README.md"
 requires-python = ">=3.9.6"
-authors = [
-  {name = "Arthur Fleischman"}
-]
+authors = [{ name = "Arthur Fleischman" }]
 
-dependencies = [
-  "requests",
-]
+dependencies = ["requests", "cherrypy", "pymongo"]
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
-[scripts]
-api = "api.__init__:main"

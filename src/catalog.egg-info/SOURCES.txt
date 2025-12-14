@@ -11,3 +11,8 @@ src/catalog.egg-info/SOURCES.txt
 src/catalog.egg-info/dependency_links.txt
 src/catalog.egg-info/requires.txt
 src/catalog.egg-info/top_level.txt
+src/db/db.py
+src/models/device_model.py
+src/models/sensor_model.py
+src/models/service_model.py
+src/models/user_model.py
