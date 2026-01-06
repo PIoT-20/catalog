@@ -10,7 +10,7 @@ conf = {
             'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
             'tools.sessions.on': False,
             'tools.response_headers.on': True,
-            'tools.response_headers.headers': [('Content-Type', 'text/plain'),('Accept', 'application/json'), ('Content-Type', 'application/json')],
+            'tools.response_headers.headers': [('Accept', 'application/json'), ('Content-Type', 'application/json')],
         }
     }
 

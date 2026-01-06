@@ -6,3 +6,5 @@ Author: Arthur Fleischman
 Requires-Python: >=3.9.6
 Description-Content-Type: text/markdown
 Requires-Dist: requests
+Requires-Dist: cherrypy
+Requires-Dist: pymongo
