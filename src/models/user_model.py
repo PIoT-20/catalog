@@ -30,6 +30,11 @@ class UserModel:
         db = startConnection()
         return db['users'].find().to_list()
 
+    @classmethod
+    def get_users_by_id(cls, id) -> dict:
+        db = startConnection()
+        return db['users'].find_one({"_id": id})
+
     def create_user(self) -> dict:
         db = startConnection()
         res = db['users'].insert_one(self.to_create_dict())

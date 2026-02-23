@@ -6,13 +6,15 @@ from src.db.db import startConnection
 from .sensor_model import SensorModel
 
 
+
 class DeviceModel:
-    def __init__(self, _id: ObjectId, device_type:str, address: str="", description: str="", sensors: list[SensorModel]=[]) -> None:
+    def __init__(self, _id: ObjectId,_user_id: ObjectId, device_type:str, address: str="", description: str="", sensors: list[SensorModel]=[]) -> None:
         self._id: ObjectId = _id
         self.device_type: str = device_type
         self.address: str = address
         self.description: str = description
         self.sensors: list[SensorModel]=  sensors
+        self.user_id: ObjectId = _user_id
 
     @classmethod
     def from_dict(cls, d):
@@ -22,19 +24,26 @@ class DeviceModel:
             address=d.get("address"),
             description=d.get("description"),
             sensors=d.get("sensors"),
+            _user_id=d.get("user_id")
         )
     def to_create_dict(self) -> dict:
         return {
             "device_type": self.device_type,
             "address": self.address,
             "description": self.description,
-            "sensors": self.sensors
+            "sensors": self.sensors,
+            "user_id": self.user_id
         }
 
     @classmethod
     def get_devices(cls) -> list[dict]:
         db = startConnection()
         return db['devices'].find().to_list()
+
+    @classmethod
+    def get_devices_by_client_id(cls, client_id: ObjectId, device_id: ObjectId) -> list[dict]:
+        db = startConnection()
+        return db['devices'].find({"user_id": client_id, "_id":device_id}).to_list()
 
     def create_device(self)-> dict:
         db = startConnection()

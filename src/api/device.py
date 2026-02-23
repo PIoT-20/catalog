@@ -10,10 +10,16 @@ from  src.models.device_model import DeviceModel
 # @cherrypy.tools.json_in()
 class DeviceApi(object):
        
-    def GET(self):
+    def GET(self,*uri, **params):
         cherrypy.response.status = 200
-        return json_util.dumps(DeviceModel.get_devices())
-    
+        client_id = params.get("client_id")
+        device_id = params.get("device_id")
+
+        if client_id is not None and device_id is not None:
+            return json.loads(json.dumps(DeviceModel.get_devices_by_id(client_id,device_id)))
+        else:
+            return json.loads(json_util.dumps(DeviceModel.get_devices()))
+
     def POST(self):
         try:
             data = cherrypy.request.body.read()
@@ -26,7 +32,7 @@ class DeviceApi(object):
 
         new_device = device.create_device()
         cherrypy.response.status = 201
-        return json_util.dumps(new_device)
+        return json.loads(json_util.dumps(new_device))
 
     def PUT(self):
         try:
@@ -40,7 +46,7 @@ class DeviceApi(object):
         updated_device = device.update_device()
         if updated_device is not None:
             cherrypy.response.status = 200
-            return json_util.dumps(updated_device)
+            return json.loads(json_util.dumps(updated_device))
         else:
             cherrypy.response.status = 400
             return {"error": "device Id not found"}

@@ -12,7 +12,7 @@ class SensorApi(object):
 
     def GET(self):
         cherrypy.response.status = 200
-        return json_util.dumps(SensorModel.get_sensors())
+        return json.loads(json_util.dumps(SensorModel.get_sensors()))
     
     def POST(self):
         try:
@@ -25,7 +25,7 @@ class SensorApi(object):
 
         new_sensor = sensor.create_sensor()
         cherrypy.response.status = 201
-        return json_util.dumps(new_sensor)
+        return json.loads(json_util.dumps(new_sensor))
 
     def PUT(self):
         try:
@@ -39,7 +39,7 @@ class SensorApi(object):
         updated_sensor = sensor.update_sensor()
         if updated_sensor is not None:
             cherrypy.response.status = 201
-            return json_util.dumps(updated_sensor)
+            return json.loads(json_util.dumps(updated_sensor))
         else:
             cherrypy.response.status = 400
             return json.dumps({"error": "sensor Id not found"})

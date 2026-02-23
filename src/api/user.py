@@ -24,7 +24,7 @@ class UserApi(object):
 
         new_user = sensor.create_user()
         cherrypy.response.status = 201
-        return json_util.dumps(new_user)
+        return json.loads(json_util.dumps(new_user))
 
     def PUT(self):
         try:
@@ -38,7 +38,7 @@ class UserApi(object):
         updated_user = sensor.update_user()
         if updated_user is not None:
             cherrypy.response.status = 201
-            return json_util.dumps(updated_user)
+            return json.loads(json_util.dumps(updated_user))
         else:
             cherrypy.response.status = 400
             return json.dumps({"error": "sensor Id not found"})

@@ -9,7 +9,7 @@ from models.service_model import ServiceModel
 class ServiceApi(object):
     def GET(self):
         cherrypy.response.status = 200
-        return json_util.dumps(ServiceModel.get_services())
+        return json.loads(json_util.dumps(ServiceModel.get_services()))
 
     def POST(self):
         try:
@@ -22,7 +22,7 @@ class ServiceApi(object):
 
         new_service = sensor.create_service()
         cherrypy.response.status = 201
-        return json_util.dumps(new_service)
+        return json.loads(json_util.dumps(new_service))
 
     def PUT(self):
         try:
@@ -36,7 +36,7 @@ class ServiceApi(object):
         updated_service = sensor.update_service()
         if updated_service is not None:
             cherrypy.response.status = 201
-            return json_util.dumps(updated_service)
+            return json.loads(json_util.dumps(updated_service))
         else:
             cherrypy.response.status = 400
             return json.dumps({"error": "sensor Id not found"})
