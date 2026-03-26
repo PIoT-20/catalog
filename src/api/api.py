@@ -26,13 +26,13 @@ class Api():
         self.service = ServiceApi()
         self.sensor = SensorApi()
     def GET(self):
-        return "Hello, World!"
+        return "GET REQUEST"
     def POST(self):
-        return "Hello, World!"
+        return "POST REQUEST"
     def PUT(self):
-        return "Hello, World!"
+        return "PUT REQUEST"
     def DELETE(self):
-        return "Hello, World!"
+        return "DELETE REQUEST"
 
     def startApi(self):
         cherrypy.config.update({

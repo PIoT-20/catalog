@@ -3,11 +3,10 @@ from bson import ObjectId
 
 
 class UserModel:
-    def __init__(self, _id: ObjectId, name: str = "", email: str = "", password: str = "") -> None:
+    def __init__(self, _id: ObjectId, name: str = "", email: str = "") -> None:
         self._id: ObjectId = _id
         self.name: str = name
         self.email: str = email
-        self.password: str = password
 
     @classmethod
     def from_dict(cls, d):
@@ -15,14 +14,12 @@ class UserModel:
             _id=d.get("_id") or None,
             name=d.get("name"),
             email=d.get("email"),
-            password=d.get("password"),
         )
 
     def to_create_dict(self) -> dict:
         return {
             "name": self.name,
-            "email": self.email,
-            "password": self.password
+            "email": self.email
         }
 
     @classmethod
@@ -50,4 +47,3 @@ class UserModel:
         db = startConnection()
         res = db['users'].delete_one({"_id": ObjectId(user_id)})
         return res.deleted_count >= 1
-

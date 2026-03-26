@@ -7,9 +7,8 @@ from  src.models.device_model import DeviceModel
 
 @cherrypy.expose()
 @cherrypy.tools.json_out()
-# @cherrypy.tools.json_in()
 class DeviceApi(object):
-       
+
     def GET(self,*uri, **params):
         cherrypy.response.status = 200
         client_id = params.get("client_id")
@@ -50,7 +49,7 @@ class DeviceApi(object):
         else:
             cherrypy.response.status = 400
             return {"error": "device Id not found"}
-        
+
     def DELETE(self, device_id: str):
         if DeviceModel.delete_device(device_id):
             cherrypy.response.status = 204
@@ -58,4 +57,3 @@ class DeviceApi(object):
         else:
             cherrypy.response.status = 422
             return {"error": "Cannot delete device"}
-

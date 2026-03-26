@@ -7,13 +7,12 @@ from bson import json_util
 
 @cherrypy.expose()
 @cherrypy.tools.json_out()
-# @cherrypy.tools.json_in()
 class SensorApi(object):
 
     def GET(self):
         cherrypy.response.status = 200
         return json.loads(json_util.dumps(SensorModel.get_sensors()))
-    
+
     def POST(self):
         try:
             data = cherrypy.request.body.read()
@@ -43,7 +42,7 @@ class SensorApi(object):
         else:
             cherrypy.response.status = 400
             return json.dumps({"error": "sensor Id not found"})
-        
+
     def DELETE(self, sensor_id: str):
 
         if SensorModel.delete_sensor(sensor_id):
