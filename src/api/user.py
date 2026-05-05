@@ -11,7 +11,7 @@ from models.user_model import UserModel
 class UserApi(object):
     def GET(self):
         cherrypy.response.status = 200
-        return json_util.dumps(UserModel.get_users())
+        return json.loads(json_util.dumps(UserModel.get_users()))
 
     def POST(self):
         try:
@@ -51,3 +51,7 @@ class UserApi(object):
         else:
             cherrypy.response.status = 400
             return json_util.dumps({"error": "sensor Id not found"})
+
+    def OPTIONS(self, *args, **kwargs):
+        cherrypy.response.status = 200
+        return ""

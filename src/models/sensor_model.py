@@ -4,24 +4,24 @@ from bson import ObjectId
 
 
 class SensorModel:
-    def __init__(self, _id: ObjectId, name: str="", model: str="", unit: str="") -> None:
-        self._id: ObjectId = _id
-        self.name: str = name
-        self.model: str = model
-        self.unit: str = unit
+    def __init__(self, _id: ObjectId, tp: str="", model: str="", unit: str="") -> None:
+            self._id: ObjectId = _id
+            self.type: str = tp
+            self.model: str = model
+            self.unit: str = unit
 
     @classmethod
     def from_dict(cls, d):
         return cls(
             _id=d.get("_id") or None,
-            name=d.get("name"),
+            tp=d.get("type"),
             model=d.get("model"),
             unit=d.get("unit"),
         )
 
     def to_create_dict(self) -> dict:
         return {
-            "name": self.name,
+            "type": self.type,
             "model": self.model,
             "unit": self.unit
         }

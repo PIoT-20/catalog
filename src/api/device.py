@@ -9,13 +9,15 @@ from  src.models.device_model import DeviceModel
 @cherrypy.tools.json_out()
 class DeviceApi(object):
 
-    def GET(self,*uri, **params):
+    def GET(self, **params):
         cherrypy.response.status = 200
         client_id = params.get("client_id")
         device_id = params.get("device_id")
 
         if client_id is not None and device_id is not None:
-            return json.loads(json.dumps(DeviceModel.get_devices_by_id(client_id,device_id)))
+            return json.loads(json_util.dumps(DeviceModel.get_devices_by_client_and_device_id(client_id,device_id)))
+        elif client_id is not None and device_id is None:
+            return json.loads(json_util.dumps(DeviceModel.get_devices_by_client_id(client_id)))
         else:
             return json.loads(json_util.dumps(DeviceModel.get_devices()))
 

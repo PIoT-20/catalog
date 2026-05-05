@@ -4,22 +4,30 @@ from .device import DeviceApi
 from .sensor import SensorApi
 from .service import ServiceApi
 from .user import UserApi
-import json
+
+
+
+def cors():
+    cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
+    cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    cherrypy.response.headers["Access-Control-Allow-Headers"] = "*"
+
+cherrypy.tools.cors = cherrypy.Tool('before_handler', cors)
 
 conf = {
     '/': {
-
         'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
         'tools.sessions.on': False,
         'tools.response_headers.on': True,
-        'tools.response_headers.headers': [('Content-Type', 'text/plain'),('Accept', 'application/json'), ('Content-Type', 'application/json')],
+        'tools.cors.on': True,
+        'tools.response_headers.headers': [('Content-Type', 'text/plain'),('Accept', '*/*'), ('Content-Type', 'application/json')],
+
     }
 }
 
 
-
 @cherrypy.expose
-class Api():
+class Api:
     def __init__(self):
         self.device = DeviceApi()
         self.user = UserApi()

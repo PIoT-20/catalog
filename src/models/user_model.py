@@ -1,12 +1,18 @@
 from src.db.db import startConnection
 from bson import ObjectId
+from .points_model import PointModel
+from typing import List
 
 
 class UserModel:
-    def __init__(self, _id: ObjectId, name: str = "", email: str = "") -> None:
+    def __init__(self, _id: ObjectId, name: str = "", email: str = "", svg_map="", points=List[PointModel]) -> None:
+        if points is None:
+            points = []
         self._id: ObjectId = _id
         self.name: str = name
         self.email: str = email
+        self.svg_map: str = svg_map
+        self.points:List[PointModel]=points
 
     @classmethod
     def from_dict(cls, d):
@@ -14,12 +20,16 @@ class UserModel:
             _id=d.get("_id") or None,
             name=d.get("name"),
             email=d.get("email"),
+            svg_map=d.get("svg_map"),
+            points=d.get("points")
         )
 
     def to_create_dict(self) -> dict:
         return {
             "name": self.name,
-            "email": self.email
+            "email": self.email,
+            "svg_map": self.svg_map,
+            "points": self.points
         }
 
     @classmethod
