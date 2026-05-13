@@ -65,20 +65,19 @@ class DeviceModel:
             _id=d.get("_id") or None,
             device_type=d.get("device_type"),
             location=d.get("location"),
-            connection_info=d.get("connection_info"),
+            connection_info=connection_info,
             description=d.get("description"),
-            location=d.get("location"),
             sensors=sensors,
-            user_id=d.get("user_id"),
-            connection_info=connection_info
+            _user_id=d.get("user_id"),
         )
+
     def to_create_dict(self) -> dict:
         return {
             "device_type": self.device_type,
             "description": self.description,
             "location": self.location,
             "sensors": [s.to_dict() for s in self.sensors],
-            "user_id": self.user_id,
+            "_user_id": self.user_id,
             "connection_info": self.connection_info.to_dict()
         }
 
