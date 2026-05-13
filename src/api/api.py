@@ -1,7 +1,6 @@
 import cherrypy
 
 from .device import DeviceApi
-from .sensor import SensorApi
 from .service import ServiceApi
 from .user import UserApi
 
@@ -32,7 +31,6 @@ class Api:
         self.device = DeviceApi()
         self.user = UserApi()
         self.service = ServiceApi()
-        self.sensor = SensorApi()
     def GET(self):
         return "GET REQUEST"
     def POST(self):
@@ -51,5 +49,4 @@ class Api:
         cherrypy.tree.mount(self.device, '/device', conf)
         cherrypy.tree.mount(self.user, '/user', conf)
         cherrypy.tree.mount(self.service, '/service', conf)
-        cherrypy.tree.mount(self.sensor, '/sensor', conf)
         cherrypy.quickstart(self, '/', conf)

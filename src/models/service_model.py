@@ -1,15 +1,18 @@
 
+from datetime import datetime
+
 from bson import ObjectId, json_util
 
 from src.db.db import startConnection
 
 
 class ServiceModel:
-    def __init__(self, _id: ObjectId, service_type:str, address: str="", description: str="",) -> None:
+    def __init__(self, _id: ObjectId, service_type:str, address: str="", description: str="", last_updated: datetime=None) -> None:
         self._id: ObjectId = _id
         self.service_type:str = service_type
         self.address:str = address
         self.description: str = description
+        self.last_updated: datetime = last_updated or datetime.now()
 
     @classmethod
     def from_dict(cls, d):
@@ -18,20 +21,25 @@ class ServiceModel:
             service_type=d.get("service_type"),
             address=d.get("address"),
             description=d.get("description"),
-
+            last_updated=d.get("last_updated")
         )
     def to_create_dict(self) -> dict:
         return {
             "service_type": self.service_type,
             "address": self.address,
             "description": self.description,
-
+            "last_updated": self.last_updated
         }
 
     @classmethod
     def get_services(cls) -> list[dict]:
         db = startConnection()
         return db['services'].find().to_list()
+    
+    @classmethod
+    def get_service_by_type(cls, service_type: str) -> dict:
+        db = startConnection()
+        return db['services'].find({"service_type": service_type}).sort("last_updated", -1).limit(1).to_list()
 
     def create_service(self)-> dict:
         db = startConnection()
