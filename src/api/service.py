@@ -1,7 +1,9 @@
-from datetime import datetime
 import json
+from datetime import datetime
+
 import cherrypy
 from bson import json_util
+
 from models.service_model import ServiceModel
 
 

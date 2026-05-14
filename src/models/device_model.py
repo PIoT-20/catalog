@@ -1,4 +1,4 @@
-from bson import ObjectId, json_util
+from bson import ObjectId
 
 from src.db.db import startConnection
 from src.models.connection_info_model import ConnectionInfoModel
@@ -21,7 +21,7 @@ class DeviceModel:
         self.location: str = location
         self.connection_info: ConnectionInfoModel = connection_info
         self.sensors: list[SensorModel] = sensors
-        self.user_id: ObjectId = _user_id
+        self._user_id: ObjectId = _user_id
         self.description: str = description
 
     @classmethod
@@ -30,7 +30,7 @@ class DeviceModel:
         connection_info = ConnectionInfoModel.from_dict(d.get("connection_info"))
 
         return cls(
-            _id=d.get("_id") or None,
+            _id=d.get("_id"),
             device_type=d.get("device_type"),
             location=d.get("location"),
             connection_info=connection_info,
@@ -45,7 +45,7 @@ class DeviceModel:
             "description": self.description,
             "location": self.location,
             "sensors": [s.to_dict() for s in self.sensors],
-            "_user_id": self.user_id,
+            "_user_id": self._user_id,
             "connection_info": self.connection_info.to_dict(),
         }
 
