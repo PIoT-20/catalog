@@ -1,3 +1,5 @@
+import json
+
 import cherrypy
 
 from .device import DeviceApi
@@ -24,21 +26,17 @@ conf = {
     }
 }
 
-
 @cherrypy.expose
 class Api:
     def __init__(self):
         self.device = DeviceApi()
         self.user = UserApi()
         self.service = ServiceApi()
+
+
+    @cherrypy.tools.json_out()
     def GET(self):
-        return "GET REQUEST"
-    def POST(self):
-        return "POST REQUEST"
-    def PUT(self):
-        return "PUT REQUEST"
-    def DELETE(self):
-        return "DELETE REQUEST"
+        return {"status": "ok"}
 
     def startApi(self):
         cherrypy.config.update({
@@ -49,4 +47,6 @@ class Api:
         cherrypy.tree.mount(self.device, '/device', conf)
         cherrypy.tree.mount(self.user, '/user', conf)
         cherrypy.tree.mount(self.service, '/service', conf)
-        cherrypy.quickstart(self, '/', conf)
+        cherrypy.tree.mount(self, '/', conf)
+        cherrypy.engine.start()
+        cherrypy.engine.block()
