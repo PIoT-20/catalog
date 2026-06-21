@@ -37,6 +37,13 @@ class ServiceApi(object):
             cherrypy.response.status = 422
             return json.dumps({"error": str(e)})
 
+        existing_services = ServiceModel.get_service_by_type(sensor.service_type)
+        if existing_services:
+            sensor._id = existing_services[0]["_id"]
+            updated_service = sensor.update_service()
+            cherrypy.response.status = 200
+            return json.loads(json_util.dumps(updated_service))
+
         new_service = sensor.create_service()
         cherrypy.response.status = 201
         return json.loads(json_util.dumps(new_service))

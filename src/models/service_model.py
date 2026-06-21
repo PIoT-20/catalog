@@ -48,8 +48,8 @@ class ServiceModel:
 
     def update_service(self) -> dict:
         db = startConnection()
-        res = db['services'].update_one({"_id": self._id}, {"$set":self.to_create_dict()})
-        return db['services'].find_one(res.upserted_id)
+        db['services'].update_one({"_id": self._id}, {"$set":self.to_create_dict()})
+        return db['services'].find_one(self._id)
 
     @classmethod
     def delete_service(cls, service_id: str) -> bool:
