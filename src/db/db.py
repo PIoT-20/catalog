@@ -11,4 +11,6 @@ def startConnection() -> Database:
     if uri is None:
         raise ValueError("MONGO_DB environment variable is not set")
     client: MongoClient = MongoClient(uri, server_api=ServerApi("1"))
-    return client["catalog"]
+    db = client["catalog"]
+    db["services"].create_index("service_type", unique=True)
+    return db
