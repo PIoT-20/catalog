@@ -18,6 +18,13 @@ class DeviceApi(object):
             return json.loads(json_util.dumps(DeviceModel.get_devices_by_client_and_device_id(client_id,device_id)))
         elif client_id is not None and device_id is None:
             return json.loads(json_util.dumps(DeviceModel.get_devices_by_client_id(client_id)))
+        elif client_id is None and device_id is not None:
+            device = DeviceModel.get_devices_by_device_id(device_id)
+            if not device:
+                cherrypy.response.status = 404
+                return json.dumps({"error": f"Device with id {device_id} not found"})
+            else:
+                return json.loads(json_util.dumps(device))
         else:
             return json.loads(json_util.dumps(DeviceModel.get_devices()))
 
@@ -59,3 +66,7 @@ class DeviceApi(object):
         else:
             cherrypy.response.status = 422
             return {"error": "Cannot delete device"}
+
+    def OPTIONS(self, *args, **kwargs):
+        cherrypy.response.status = 200
+        return ""

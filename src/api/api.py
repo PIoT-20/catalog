@@ -22,7 +22,7 @@ conf = {
         'tools.response_headers.on': True,
         'tools.cors.on': True,
         'tools.response_headers.headers': [('Content-Type', 'text/plain'),('Accept', '*/*'), ('Content-Type', 'application/json')],
-
+        'request.show_tracebacks': False,
     }
 }
 
