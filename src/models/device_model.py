@@ -73,7 +73,7 @@ class DeviceModel:
     @classmethod
     def get_devices_by_client_id(cls, client_id: str) -> list[dict]:
         db = startConnection()
-        return db["devices"].find({"user_id": ObjectId(client_id)}).to_list()
+        return db["devices"].find({"user_id": client_id}).to_list()
 
     def create_device(self) -> dict:
         db = startConnection()
