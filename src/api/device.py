@@ -23,7 +23,6 @@ class DeviceApi(object):
                 )
             )
         elif client_id is not None and device_id is None:
-            print("hit here")
             return json.loads(
                 json_util.dumps(DeviceModel.get_devices_by_client_id(client_id))
             )
